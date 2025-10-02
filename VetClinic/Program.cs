@@ -12,7 +12,9 @@ while (!exit)
     Console.WriteLine("1. Register patient");
     Console.WriteLine("2. List patients");
     Console.WriteLine("3. Search patient");
-    Console.WriteLine("4. Exit");
+    Console.WriteLine("4. Dictionary demo");
+    Console.WriteLine("5. LINQ queries");
+    Console.WriteLine("6. Exit");
     Console.Write("Choose an option: ");
 
     string? input = Console.ReadLine();
@@ -38,8 +40,13 @@ while (!exit)
             }
             break;
         case "4":
+            PatientService.DictionaryDemo(patients);
+            break;
+        case "5":
+            PatientService.RunLinqQueries(patients);
+            break;
+        case "6":
             exit = true;
-            Console.WriteLine("Exiting program...");
             break;
         default:
             Console.WriteLine("Invalid option. Please choose 1, 2, 3, or 4.");
