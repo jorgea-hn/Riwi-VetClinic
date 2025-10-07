@@ -2,7 +2,7 @@ using VetClinic.Interfaces;
 
 namespace VetClinic.Models;
 
-public class Patient : IRegistrable
+public class Patient : IRegistrable, INotificable
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; }
@@ -44,5 +44,10 @@ public class Patient : IRegistrable
     public void AddPet(Pet pet)
     {
         Pets.Add(pet);
+    }
+    
+    public void EnviarNotificacion(string mensaje)
+    {
+        Console.WriteLine($"[NOTIFICACIÓN] Para {Name}: {mensaje}");
     }
 }

@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Data\" />
       <Folder Include="Docs\" />
+      <Folder Include="Repositories\" />
     </ItemGroup>
 
 </Project>

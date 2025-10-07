@@ -1,4 +1,6 @@
 using VetClinic.Models;
+using VetClinic.Exceptions;
+using VetClinic.Utils;
 
 namespace VetClinic.Services;
 
@@ -32,13 +34,21 @@ public class PetService
             Console.Write("Age: ");
             int age = int.Parse(Console.ReadLine() ?? throw new Exception("Invalid input"));
 
-            var pet = new Pet(petName!, age, species!, breed!, owner);
+            if (string.IsNullOrWhiteSpace(petName) || string.IsNullOrWhiteSpace(species) || string.IsNullOrWhiteSpace(breed))
+                throw new ArgumentException("All pet fields are required.");
+
+            var pet = new Pet(petName, age, species, breed, owner);
+            pet.Register();
             owner.AddPet(pet);
             Console.WriteLine("Pet registered successfully!");
         }
+        catch (MascotaNoEncontradaException ex)
+        {
+            Logger.LogError(ex.Message);
+        }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Logger.LogError(ex.Message);
         }
     }
 }

@@ -1,5 +1,7 @@
 namespace VetClinic.Models;
 
+// Clase abstracta: se usa cuando queremos definir una base común con implementación parcial
+// Aquí, todos los animales comparten propiedades y el método abstracto MakeSound().
 public abstract class Animal
 {
     public string Name { get; set; }
