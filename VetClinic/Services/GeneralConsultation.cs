@@ -1,9 +1,15 @@
-namespace VetClinic.Services;
 
-public class GeneralConsultation : VeterinaryService
+using VetClinic.Models;
+using System;
+
+namespace VetClinic.Services
 {
-    public override void Attend()
+    public class GeneralConsultation : VeterinaryService
     {
-        Console.WriteLine("Performing general consultation...");
+        public override void PerformService(Pet pet)
+        {
+            Console.WriteLine($"Performing general consultation for {pet.Name}");
+            // Add logic for general consultation
+        }
     }
 }

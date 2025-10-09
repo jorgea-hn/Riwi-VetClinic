@@ -1,54 +1,26 @@
+
 using VetClinic.Models;
-using VetClinic.Exceptions;
-using VetClinic.Utils;
+using VetClinic.Repositories;
 
-namespace VetClinic.Services;
-
-public class PetService
+namespace VetClinic.Services
 {
-    public static void RegisterPet(List<Patient> patients)
+    public class PetService
     {
-        try
+        private readonly IRepository<Pet> _petRepository;
+
+        public PetService(IRepository<Pet> petRepository)
         {
-            Console.Write("Enter patient ID: ");
-            string? idInput = Console.ReadLine();
-            if (!Guid.TryParse(idInput, out Guid patientId))
-            {
-                Console.WriteLine("Invalid GUID format.");
-                return;
-            }
-
-            var owner = patients.FirstOrDefault(p => p.Id == patientId);
-            if (owner == null)
-            {
-                Console.WriteLine("Patient not found.");
-                return;
-            }
-
-            Console.Write("Pet Name: ");
-            string? petName = Console.ReadLine();
-            Console.Write("Species: ");
-            string? species = Console.ReadLine();
-            Console.Write("Breed: ");
-            string? breed = Console.ReadLine();
-            Console.Write("Age: ");
-            int age = int.Parse(Console.ReadLine() ?? throw new Exception("Invalid input"));
-
-            if (string.IsNullOrWhiteSpace(petName) || string.IsNullOrWhiteSpace(species) || string.IsNullOrWhiteSpace(breed))
-                throw new ArgumentException("All pet fields are required.");
-
-            var pet = new Pet(petName, age, species, breed, owner);
-            pet.Register();
-            owner.AddPet(pet);
-            Console.WriteLine("Pet registered successfully!");
+            _petRepository = petRepository;
         }
-        catch (MascotaNoEncontradaException ex)
+
+        public void RegisterPet(Pet pet)
         {
-            Logger.LogError(ex.Message);
+            _petRepository.Add(pet);
         }
-        catch (Exception ex)
+
+        public Pet FindPet(int id)
         {
-            Logger.LogError(ex.Message);
+            return _petRepository.GetById(id);
         }
     }
 }

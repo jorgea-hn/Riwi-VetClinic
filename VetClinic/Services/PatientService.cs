@@ -1,64 +1,26 @@
+
 using VetClinic.Models;
+using VetClinic.Repositories;
 
-namespace VetClinic.Services;
-
-public class PatientService
+namespace VetClinic.Services
 {
-    public static void RegisterPatient(List<Patient> patients)
+    public class PatientService
     {
-        try
+        private readonly IRepository<Patient> _patientRepository;
+
+        public PatientService(IRepository<Patient> patientRepository)
         {
-            Console.WriteLine("Register a new patient:");
-
-            Console.Write("Name: ");
-            string? name = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(name)) return;
-
-            Console.Write("Age: ");
-            int age = int.Parse(Console.ReadLine() ?? throw new Exception("Invalid input"));
-
-            Console.Write("Address: ");
-            string? address = Console.ReadLine();
-
-            Console.Write("Phone: ");
-            string? phone = Console.ReadLine();
-            if (string.IsNullOrWhiteSpace(phone)) return;
-
-            var patient = new Patient(name, age, address ?? "", phone);
-            patients.Add(patient);
-            Console.WriteLine("Patient registered successfully!");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
-    public static void ListPatients(List<Patient> patients)
-    {
-        if (!patients.Any())
-        {
-            Console.WriteLine("No patients registered.");
-            return;
+            _patientRepository = patientRepository;
         }
 
-        foreach (var patient in patients)
+        public void RegisterPatient(Patient patient)
         {
-            patient.ShowInfo();
-            if (patient.Pets.Any())
-            {
-                Console.WriteLine("Pets:");
-                foreach (var pet in patient.Pets)
-                {
-                    Console.WriteLine($" - {pet.Name} ({pet.Species}, Breed: {pet.Breed})");
-                }
-            }
-            else
-            {
-                Console.WriteLine("No pets registered for this patient.");
-            }
-            Console.WriteLine();
+            _patientRepository.Add(patient);
+        }
+
+        public Patient FindPatient(int id)
+        {
+            return _patientRepository.GetById(id);
         }
     }
 }
-        

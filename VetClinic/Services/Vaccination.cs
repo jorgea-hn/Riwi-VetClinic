@@ -1,9 +1,15 @@
-namespace VetClinic.Services;
 
-public class Vaccination : VeterinaryService
+using VetClinic.Models;
+using System;
+
+namespace VetClinic.Services
 {
-    public override void Attend()
+    public class Vaccination : VeterinaryService
     {
-        Console.WriteLine("Performing vaccination...");
+        public override void PerformService(Pet pet)
+        {
+            Console.WriteLine($"Vaccinating {pet.Name}");
+            // Add logic for vaccination
+        }
     }
 }
