@@ -7,8 +7,8 @@ namespace VetClinic.Repositories
     {
         void Add(T entity);
         void Update(T entity);
-        void Delete(int id);
-        T GetById(int id);
+        void Delete(Guid id);
+        T GetById(Guid id);
         IEnumerable<T> GetAll();
     }
 }

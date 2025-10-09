@@ -20,7 +20,7 @@ namespace VetClinic.Repositories
             _database.Pets.Add(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var pet = GetById(id);
             if (pet != null)
@@ -34,7 +34,7 @@ namespace VetClinic.Repositories
             return _database.Pets;
         }
 
-        public Pet GetById(int id)
+        public Pet GetById(Guid id)
         {
             return _database.Pets.FirstOrDefault(p => p.Id == id);
         }
@@ -47,7 +47,7 @@ namespace VetClinic.Repositories
                 pet.Name = entity.Name;
                 pet.Age = entity.Age;
                 pet.Breed = entity.Breed;
-                pet.PatientId = entity.PatientId;
+                // pet.PatientId = entity.PatientId;
             }
         }
     }

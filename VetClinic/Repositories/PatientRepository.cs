@@ -9,6 +9,7 @@ namespace VetClinic.Repositories
     public class PatientRepository : IRepository<Patient>
     {
         private readonly Database _database;
+        private IRepository<Patient> _repositoryImplementation;
 
         public PatientRepository(Database database)
         {
@@ -20,7 +21,7 @@ namespace VetClinic.Repositories
             _database.Patients.Add(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var patient = GetById(id);
             if (patient != null)
@@ -34,7 +35,7 @@ namespace VetClinic.Repositories
             return _database.Patients;
         }
 
-        public Patient GetById(int id)
+        public Patient GetById(Guid id)
         {
             return _database.Patients.FirstOrDefault(p => p.Id == id);
         }

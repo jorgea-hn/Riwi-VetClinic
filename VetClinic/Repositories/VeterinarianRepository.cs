@@ -20,7 +20,7 @@ namespace VetClinic.Repositories
             _database.Veterinarians.Add(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var veterinarian = GetById(id);
             if (veterinarian != null)
@@ -34,7 +34,7 @@ namespace VetClinic.Repositories
             return _database.Veterinarians;
         }
 
-        public Veterinarian GetById(int id)
+        public Veterinarian GetById(Guid id)
         {
             return _database.Veterinarians.FirstOrDefault(v => v.Id == id);
         }

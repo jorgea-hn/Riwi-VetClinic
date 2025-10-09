@@ -20,7 +20,7 @@ namespace VetClinic.Repositories
             _database.Appointments.Add(entity);
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var appointment = GetById(id);
             if (appointment != null)
@@ -34,7 +34,7 @@ namespace VetClinic.Repositories
             return _database.Appointments;
         }
 
-        public Appointment GetById(int id)
+        public Appointment GetById(Guid id)
         {
             return _database.Appointments.FirstOrDefault(a => a.Id == id);
         }

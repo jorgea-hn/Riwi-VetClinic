@@ -26,7 +26,7 @@ namespace VetClinic.Services
             return true;
         }
 
-        public Appointment FindAppointment(int id)
+        public Appointment FindAppointment(Guid id)
         {
             return _appointmentRepository.GetById(id);
         }

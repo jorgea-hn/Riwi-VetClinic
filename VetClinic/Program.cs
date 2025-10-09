@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using VetClinic.Data;
 using VetClinic.Models;
@@ -12,7 +12,7 @@ namespace VetClinic
         public static void Main(string[] args)
         {
             var database = new Database();
-            DataSeeder.Seed(database);
+            // DataSeeder.Seed(database);
 
             var patientRepository = new PatientRepository(database);
             var petRepository = new PetRepository(database);

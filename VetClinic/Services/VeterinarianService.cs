@@ -18,7 +18,7 @@ namespace VetClinic.Services
             _veterinarianRepository.Add(veterinarian);
         }
 
-        public Veterinarian FindVeterinarian(int id)
+        public Veterinarian FindVeterinarian(Guid id)
         {
             return _veterinarianRepository.GetById(id);
         }

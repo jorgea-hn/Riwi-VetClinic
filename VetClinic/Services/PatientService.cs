@@ -18,7 +18,7 @@ namespace VetClinic.Services
             _patientRepository.Add(patient);
         }
 
-        public Patient FindPatient(int id)
+        public Patient FindPatient(Guid id)
         {
             return _patientRepository.GetById(id);
         }

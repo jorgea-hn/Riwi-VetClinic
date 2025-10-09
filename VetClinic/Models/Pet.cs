@@ -6,6 +6,7 @@ public class Pet : Animal, IRegistrable
 {
     public string Breed { get; set; }
     public Patient Owner { get; set; }
+    public Guid Id { get; set; }
 
     public Pet(string name, int age, string species, string breed, Patient owner)
         : base(name, age, species)

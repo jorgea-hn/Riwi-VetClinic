@@ -18,7 +18,7 @@ namespace VetClinic.Services
             _petRepository.Add(pet);
         }
 
-        public Pet FindPet(int id)
+        public Pet FindPet(Guid id)
         {
             return _petRepository.GetById(id);
         }
