@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using VetClinic.Data;
 using VetClinic.Models;
@@ -17,7 +17,7 @@ namespace VetClinic
         public static void Main(string[] args)
         {
             var database = new Database();
-            // DataSeeder.Seed(database);
+            DataSeeder.Seed(database);
 
             var patientRepository = new PatientRepository(database);
             var petRepository = new PetRepository(database);
@@ -92,12 +92,28 @@ namespace VetClinic
                         break;
 
                     case "2":
-                        Console.Write("Name: ");
-                        var name = Console.ReadLine();
-                        Console.Write("Age: ");
-                        int age = int.Parse(Console.ReadLine() ?? "0");
+                        string name;
+                        do
+                        {
+                            Console.Write("Name: ");
+                            name = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(name))
+                                Console.WriteLine("Name cannot be empty.");
+                        } while (string.IsNullOrWhiteSpace(name));
+
+                        int age;
+                        while (true)
+                        {
+                            Console.Write("Age: ");
+                            if (int.TryParse(Console.ReadLine(), out age) && age > 0)
+                                break;
+                            else
+                                Console.WriteLine("Invalid age.");
+                        }
+
                         Console.Write("Address: ");
                         var address = Console.ReadLine();
+
                         Console.Write("Phone: ");
                         var phone = Console.ReadLine();
 
@@ -114,11 +130,27 @@ namespace VetClinic
                             var patient = patientService.FindPatient(idToUpdate);
                             if (patient != null)
                             {
-                                Console.Write("New Name: ");
-                                patient.Name = Console.ReadLine();
+                                string newName;
+                                do
+                                {
+                                    Console.Write("New Name: ");
+                                    newName = Console.ReadLine();
+                                    if (string.IsNullOrWhiteSpace(newName))
+                                        Console.WriteLine("Name cannot be empty.");
+                                } while (string.IsNullOrWhiteSpace(newName));
+                                patient.Name = newName;
 
-                                Console.Write("New Age: ");
-                                patient.Age = int.Parse(Console.ReadLine() ?? "0");
+
+                                int newAge;
+                                while (true)
+                                {
+                                    Console.Write("New Age: ");
+                                    if (int.TryParse(Console.ReadLine(), out newAge) && newAge > 0)
+                                        break;
+                                    else
+                                        Console.WriteLine("Invalid age.");
+                                }
+                                patient.Age = newAge;
 
                                 Console.Write("New Address: ");
                                 patient.Address = Console.ReadLine();
@@ -187,10 +219,26 @@ namespace VetClinic
                         break;
 
                     case "2":
-                        Console.Write("Name: ");
-                        var petName = Console.ReadLine();
-                        Console.Write("Age: ");
-                        int petAge = int.Parse(Console.ReadLine() ?? "0");
+                        string petName;
+                        do
+                        {
+                            Console.Write("Name: ");
+                            petName = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(petName))
+                                Console.WriteLine("Name cannot be empty.");
+                        } while (string.IsNullOrWhiteSpace(petName));
+
+
+                        int petAge;
+                        while (true)
+                        {
+                            Console.Write("Age: ");
+                            if (int.TryParse(Console.ReadLine(), out petAge) && petAge > 0)
+                                break;
+                            else
+                                Console.WriteLine("Invalid age.");
+                        }
+
                         Console.Write("Species: ");
                         var species = Console.ReadLine();
                         Console.Write("Breed: ");
@@ -227,11 +275,27 @@ namespace VetClinic
                             var pet = petService.FindPet(petId);
                             if (pet != null)
                             {
-                                Console.Write("New Name: ");
-                                pet.Name = Console.ReadLine();
+                                string newPetName;
+                                do
+                                {
+                                    Console.Write("New Name: ");
+                                    newPetName = Console.ReadLine();
+                                    if (string.IsNullOrWhiteSpace(newPetName))
+                                        Console.WriteLine("Name cannot be empty.");
+                                } while (string.IsNullOrWhiteSpace(newPetName));
 
-                                Console.Write("New Age: ");
-                                pet.Age = int.Parse(Console.ReadLine() ?? "0");
+                                pet.Name = newPetName;
+
+                                int newPetAge;
+                                while (true)
+                                {
+                                    Console.Write("New Age: ");
+                                    if (int.TryParse(Console.ReadLine(), out newPetAge) && newPetAge > 0)
+                                        break;
+                                    else
+                                        Console.WriteLine("Invalid age.");
+                                }
+                                pet.Age = newPetAge;
 
                                 Console.Write("New Species: ");
                                 pet.Species = Console.ReadLine();
@@ -300,12 +364,19 @@ namespace VetClinic
                         break;
 
                     case "2":
-                        Console.Write("Name: ");
-                        var name = Console.ReadLine();
+                        string vetName;
+                        do
+                        {
+                            Console.Write("Name: ");
+                            vetName = Console.ReadLine();
+                            if (string.IsNullOrWhiteSpace(vetName))
+                                Console.WriteLine("Name cannot be empty.");
+                        } while (string.IsNullOrWhiteSpace(vetName));
+
                         Console.Write("Specialization: ");
                         var specialization = Console.ReadLine();
 
-                        var newVet = new Veterinarian(name, specialization);
+                        var newVet = new Veterinarian(vetName, specialization);
                         veterinarianService.AddVeterinarian(newVet);
                         Console.WriteLine("Veterinarian added.");
                         break;
@@ -318,8 +389,15 @@ namespace VetClinic
                             var vet = veterinarianService.FindVeterinarian(id);
                             if (vet != null)
                             {
-                                Console.Write("New Name: ");
-                                vet.Name = Console.ReadLine();
+                                string newVetName;
+                                do
+                                {
+                                    Console.Write("New Name: ");
+                                    newVetName = Console.ReadLine();
+                                    if (string.IsNullOrWhiteSpace(newVetName))
+                                        Console.WriteLine("Name cannot be empty.");
+                                } while (string.IsNullOrWhiteSpace(newVetName));
+                                vet.Name = newVetName;
 
                                 Console.Write("New Specialization: ");
                                 vet.Specialization = Console.ReadLine();
@@ -387,37 +465,53 @@ namespace VetClinic
                         break;
 
                     case "2":
-                        Console.Write("Pet Id: ");
-                        var petIdStr = Console.ReadLine();
-                        Console.Write("Veterinarian Id: ");
-                        var vetIdStr = Console.ReadLine();
-                        Console.Write("Date (yyyy-MM-dd HH:mm): ");
-                        var dateStr = Console.ReadLine();
+                        Guid petId, vetId;
+                        DateTime date;
+
+                        while (true)
+                        {
+                            Console.Write("Pet Id: ");
+                            if (Guid.TryParse(Console.ReadLine(), out petId))
+                                break;
+                            else
+                                Console.WriteLine("Invalid Pet Id.");
+                        }
+
+                        while (true)
+                        {
+                            Console.Write("Veterinarian Id: ");
+                            if (Guid.TryParse(Console.ReadLine(), out vetId))
+                                break;
+                            else
+                                Console.WriteLine("Invalid Veterinarian Id.");
+                        }
+
+                        while (true)
+                        {
+                            Console.Write("Date (yyyy-MM-dd HH:mm): ");
+                            if (DateTime.TryParse(Console.ReadLine(), out date))
+                                break;
+                            else
+                                Console.WriteLine("Invalid date format.");
+                        }
+
                         Console.Write("Reason: ");
                         var reason = Console.ReadLine();
 
-                        if (Guid.TryParse(petIdStr, out Guid petId) &&
-                            Guid.TryParse(vetIdStr, out Guid vetId) &&
-                            DateTime.TryParse(dateStr, out DateTime date))
+                        var appointment = new Appointment
                         {
-                            var appointment = new Appointment
-                            {
-                                Id = Guid.NewGuid(),
-                                PetId = petId,
-                                VeterinarianId = vetId,
-                                Date = date,
-                                Reason = reason
-                            };
+                            Id = Guid.NewGuid(),
+                            PetId = petId,
+                            VeterinarianId = vetId,
+                            Date = date,
+                            Reason = reason
+                        };
 
-                            if (appointmentService.ScheduleAppointment(appointment))
-                                Console.WriteLine("Appointment scheduled.");
-                            else
-                                Console.WriteLine("Could not schedule appointment due to a conflict.");
-                        }
+                        if (appointmentService.ScheduleAppointment(appointment))
+                            Console.WriteLine("Appointment scheduled.");
                         else
-                        {
-                            Console.WriteLine("Invalid input(s). Please check the IDs and date format.");
-                        }
+                            Console.WriteLine("Could not schedule appointment due to a conflict.");
+
                         break;
 
                     case "3":

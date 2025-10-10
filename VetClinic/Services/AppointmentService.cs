@@ -9,6 +9,7 @@ namespace VetClinic.Services
     public class AppointmentService
     {
         private readonly IRepository<Appointment> _appointmentRepository;
+        private const int AppointmentDuration = 30; // Minutes
 
         public AppointmentService(IRepository<Appointment> appointmentRepository)
         {
@@ -19,10 +20,26 @@ namespace VetClinic.Services
         public bool ScheduleAppointment(Appointment appointment)
         {
             var appointments = _appointmentRepository.GetAll();
-            if (appointments.Any(a => a.VeterinarianId == appointment.VeterinarianId && a.Date == appointment.Date))
+
+            // La nueva cita no puede estar en el pasado
+            if (appointment.Date < DateTime.Now)
             {
-                return false; // Hay conflicto
+                return false;
             }
+
+            var newAppointmentEnd = appointment.Date.AddMinutes(AppointmentDuration);
+
+            foreach (var existingAppointment in appointments.Where(a => a.VeterinarianId == appointment.VeterinarianId))
+            {
+                var existingAppointmentEnd = existingAppointment.Date.AddMinutes(AppointmentDuration);
+
+                // Comprobar si hay solapamiento
+                if (appointment.Date < existingAppointmentEnd && newAppointmentEnd > existingAppointment.Date)
+                {
+                    return false; // Hay conflicto
+                }
+            }
+
             _appointmentRepository.Add(appointment);
             return true;
         }
