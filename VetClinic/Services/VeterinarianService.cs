@@ -13,14 +13,35 @@ namespace VetClinic.Services
             _veterinarianRepository = veterinarianRepository;
         }
 
-        public void RegisterVeterinarian(Veterinarian veterinarian)
+        
+        // Crear / Agregar veterinario
+        public void AddVeterinarian(Veterinarian veterinarian)
         {
             _veterinarianRepository.Add(veterinarian);
         }
 
+        // Leer - Buscar veterinario por Id
         public Veterinarian FindVeterinarian(Guid id)
         {
             return _veterinarianRepository.GetById(id);
+        }
+
+        // Leer - Obtener todos los veterinarios
+        public IEnumerable<Veterinarian> GetAllVeterinarians()
+        {
+            return _veterinarianRepository.GetAll();
+        }
+
+        // Actualizar veterinario
+        public void UpdateVeterinarian(Veterinarian veterinarian)
+        {
+            _veterinarianRepository.Update(veterinarian);
+        }
+
+        // Eliminar veterinario
+        public void DeleteVeterinarian(Guid id)
+        {
+            _veterinarianRepository.Delete(id);
         }
     }
 }

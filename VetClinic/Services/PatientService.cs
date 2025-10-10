@@ -13,14 +13,34 @@ namespace VetClinic.Services
             _patientRepository = patientRepository;
         }
 
-        public void RegisterPatient(Patient patient)
+        // Crear / Agregar paciente
+        public void AddPatient(Patient patient)
         {
             _patientRepository.Add(patient);
         }
 
+        // Leer - Buscar paciente por Id
         public Patient FindPatient(Guid id)
         {
             return _patientRepository.GetById(id);
+        }
+
+        // Leer - Obtener todos los pacientes
+        public IEnumerable<Patient> GetAllPatients()
+        {
+            return _patientRepository.GetAll();
+        }
+
+        // Actualizar paciente
+        public void UpdatePatient(Patient patient)
+        {
+            _patientRepository.Update(patient);
+        }
+
+        // Eliminar paciente
+        public void DeletePatient(Guid id)
+        {
+            _patientRepository.Delete(id);
         }
     }
 }
